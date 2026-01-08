@@ -167,13 +167,19 @@ jobs:
       - name: Installer
         shell: bash
         run: |
-          VERSION_STRIPPED=$(sed "s/-.*//" <<< "${{ env.TAG_NAME }}")
+          # Strip 'v' prefix and anything after '-' (e.g., v1.0.0-beta -> 1.0.0)
+          VERSION_STRIPPED=$(sed "s/^v//; s/-.*//" <<< "${{ env.TAG_NAME }}")
           if [[ "$VERSION_STRIPPED" == "" ]]; then
               VERSION_STRIPPED=1.0.0
           fi
           VERSION_MAJOR=$(cut -d. -f1 <<< "${VERSION_STRIPPED}")
           VERSION_MINOR=$(cut -d. -f2 <<< "${VERSION_STRIPPED}")
           VERSION_BUILD=$(cut -d. -f3 <<< "${VERSION_STRIPPED}")
+          # Default to 0 if any component is empty
+          VERSION_MAJOR=${VERSION_MAJOR:-0}
+          VERSION_MINOR=${VERSION_MINOR:-0}
+          VERSION_BUILD=${VERSION_BUILD:-0}
+          echo "Building installer for version: ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}"
           INSTALLED_SIZE=$(du -k -d0 "build/app/release" | cut -f1)
 
           cp "dist/win/mediawriter_native.nsi" "dist/win/mediawriter_native.tmp.nsi"
