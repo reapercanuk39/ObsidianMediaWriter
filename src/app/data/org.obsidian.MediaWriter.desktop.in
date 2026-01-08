@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+_Name=Obsidian Media Writer
+_Comment=Write Obsidian OS images to your portable drives
+Icon=org.obsidian.MediaWriter
+Exec=obsidian-media-writer
+Terminal=false
+Categories=System;
+Keywords=obsidian;usb;iso;bootable;security;
+

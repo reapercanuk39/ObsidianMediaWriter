@@ -1,5 +1,7 @@
 /*
- * Fedora Media Writer
+ * Obsidian Media Writer
+ * Based on Fedora Media Writer by Martin Bříza
+ * Copyright (C) 2025 Obsidian Project
  * Copyright (C) 2016 Martin Bříza <mbriza@redhat.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -444,11 +446,11 @@ QString Release::sourceString()
     case PRODUCT:
         return QString();
     case SPINS:
-        return tr("Fedora Spins");
+        return tr("Obsidian Variants");
     case LABS:
-        return tr("Fedora Labs");
+        return tr("Obsidian Labs");
     case EMERGING:
-        return tr("Fedora Atomic Desktops");
+        return tr("Obsidian Emerging");
     default:
         return tr("Other");
     }

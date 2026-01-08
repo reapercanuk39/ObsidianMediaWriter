@@ -83,8 +83,8 @@ public:
 #else
     bool logging{true};
 #endif
-    QString releasesUrl{"https://fedoraproject.org/releases.json"};
-    bool noUserAgent{false}; // disables sending the custom Fedora Media Writer user agent header
+    QString releasesUrl{"https://raw.githubusercontent.com/reapercanuk39/Obsidian/main/releases.json"};
+    bool noUserAgent{false}; // disables sending the custom Obsidian Media Writer user agent header
 };
 
 class MessageHandler

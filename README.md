@@ -1,22 +1,28 @@
-# Fedora Media Writer
+# Obsidian Media Writer
 
-Fedora Media Writer is a tool that helps users put Fedora images on their portable drives such as flash disks.
+Obsidian Media Writer is a tool that helps users put Obsidian OS images on their portable drives such as flash disks.
 
-It is able to automatically download the required image for them and write them in a `dd`-like fashion, using either `dd` itself or some other way to access the drive directly.
+**This is a fork of [Fedora Media Writer](https://github.com/FedoraQt/MediaWriter) customized for Obsidian OS.**
+
+It is able to automatically download the required Obsidian OS image and write it in a `dd`-like fashion, using either `dd` itself or some other way to access the drive directly.
 
 This overwrites the drive's partition layout though so it also provides a way to restore a single-partition layout with a FAT32 partition.
 
-![Fedora Media Writer running](/dist/screenshots/linux_main.png)
+## About Obsidian OS
+
+Obsidian OS is a security-hardened Linux distribution based on Debian 12, designed for privacy-conscious users, security researchers, journalists, and activists.
+
+For more information about Obsidian OS, visit the [Obsidian repository](https://github.com/reapercanuk39/Obsidian).
 
 ## Troubleshooting
 
 If you experience any problem with the application, like crashes or errors when writing to your drives, please open an issue here on Github.
 
-Please don't forget to attach the `FedoraMediaWriter.log` file that will appear in your Documents folder (`$HOME/Documents` on Linux and Mac, `%USERPROFILE%\Documents` on Windows). It contains some non-sensitive information about your system and the log of all events happening during the runtime.
+Please don't forget to attach the `ObsidianMediaWriter.log` file that will appear in your Documents folder (`$HOME/Documents` on Linux and Mac, `%USERPROFILE%\Documents` on Windows). It contains some non-sensitive information about your system and the log of all events happening during the runtime.
 
 ## Building
 
-You can build FMW using the default Qt `cmake` build system. The gist for all three platforms is written below. For a more thorough look into how the releases are composed, you can read our [GitHub Actions configuration](https://github.com/FedoraQt/MediaWriter/blob/master/.github/workflows/ccpp.yml).
+You can build Obsidian Media Writer using the default Qt `cmake` build system. The gist for all three platforms is written below.
 
 ### Linux
 
@@ -26,20 +32,19 @@ It can be done like this:
 
 `cmake [OPTIONS] .`
 
-The main binary, `mediawriter`, will be written to `$PREFIX/bin` and the helper binary can be found on the path `$PREFIX/libexec/mediawriter/helper`.
+The main binary, `obsidian-media-writer`, will be written to `$PREFIX/bin` and the helper binary can be found on the path `$PREFIX/libexec/mediawriter/helper`.
 
 #### Requirements
 
 * `udisks2` or `storaged`
 * `xz-libs`
+* Qt 6.6.0+
 
 ### Windows
 
-Building FMW in Windows is just the matter of running `cmake` and `make` - as long as you have all dependencies in your include path.
+Building in Windows is just the matter of running `cmake` and `make` - as long as you have all dependencies in your include path.
 
-To create a standalone package, use the `windeployqt` tool, included in your Qt installation. You will probably have to include a bunch of not included DLLs.
-
-It is also possible to crosscompile the application using the `MinGW` compiler suite in Fedora (and probably some other distros).
+To create a standalone package, use the `windeployqt` tool, included in your Qt installation.
 
 #### Requirements
 
@@ -55,11 +60,9 @@ To release a standalone package, use `macdeployqt`, supplied with your Qt instal
 
 * `xz-libs`
 
-## Translation
+## Credits
 
-If you want to help with translating Fedora Media Writer, please visit our [Weblate project page](https://translate.fedoraproject.org/projects/fedora-media-writer/mediawriter/).
-
-Information about the individual Fedora flavors is retrieved from the websites and translated as a separate project.
+This project is based on [Fedora Media Writer](https://github.com/FedoraQt/MediaWriter) by the Fedora Qt Team. Original work is licensed under GPL-2.0 and LGPL-2.0.
 
 ## Other information
 

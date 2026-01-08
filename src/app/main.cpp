@@ -1,5 +1,7 @@
 /*
- * Fedora Media Writer
+ * Obsidian Media Writer
+ * Based on Fedora Media Writer by Martin Bříza and Jan Grulich
+ * Copyright (C) 2025 Obsidian Project
  * Copyright (C) 2024 Jan Grulich <jgrulichredhat.com>
  * Copyright (C) 2016 Martin Bříza <mbriza@redhat.com>
  *
@@ -41,9 +43,9 @@ int main(int argc, char **argv)
     }
 #endif
 
-    QApplication::setOrganizationDomain("fedoraproject.org");
-    QApplication::setOrganizationName("fedoraproject.org");
-    QApplication::setApplicationName("MediaWriter");
+    QApplication::setOrganizationDomain("obsidian-os.org");
+    QApplication::setOrganizationName("Obsidian Project");
+    QApplication::setApplicationName("Obsidian Media Writer");
 
     QApplication app(argc, argv);
     options.parse(app.arguments());
@@ -57,7 +59,7 @@ int main(int argc, char **argv)
         app.installTranslator(&translator);
     }
 
-    QGuiApplication::setDesktopFileName("org.fedoraproject.MediaWriter");
+    QGuiApplication::setDesktopFileName("org.obsidian.MediaWriter");
 
     mDebug() << "Injecting QML context properties";
     QQmlApplicationEngine engine;

@@ -1,5 +1,6 @@
 /*
- * Fedora Media Writer
+ * Obsidian Media Writer
+ * Based on Fedora Media Writer
  * Copyright (C) 2024 Jan Grulich <jgrulich@redhat.com>
  * Copyright (C) 2021-2022 Evžen Gasta <evzen.ml@seznam.cz>
  *

@@ -1,5 +1,6 @@
 /*
- * Fedora Media Writer
+ * Obsidian Media Writer
+ * Based on Fedora Media Writer
  * Copyright (C) 2024 Jan Grulich <jgrulich@redhat.com>
  *
  * This program is free software; you can redistribute it and/or

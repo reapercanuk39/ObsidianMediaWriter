@@ -35,7 +35,7 @@ if (WIN32)
 endif()
 
 if (NOT APPLE)
-    add_executable(mediawriter ${MEDIAWRITER_SRCS})
+    add_executable(obsidian-media-writer ${MEDIAWRITER_SRCS})
 endif()
 
 if (WIN32)
@@ -47,7 +47,7 @@ if (WIN32)
     # to various slots, it would require a rewrite to apply the workarounds.
     # We simply specify the main app to require administrator privilege in
     # the manifest.
-    set_target_properties(mediawriter PROPERTIES WIN32_EXECUTABLE TRUE
+    set_target_properties(obsidian-media-writer PROPERTIES WIN32_EXECUTABLE TRUE
         LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\"")
 endif()
 
@@ -59,13 +59,13 @@ if (WIN32)
 endif()
 
 if (APPLE)
-    set(ICON mediawriter.icns)
-    set(ICON_PATH ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/mediawriter.icns)
-    add_executable(mediawriter MACOSX_BUNDLE ${MEDIAWRITER_SRCS} ${ICON_PATH})
-    set_target_properties(mediawriter PROPERTIES
-      OUTPUT_NAME FedoraMediaWriter
+    set(ICON obsidian-media-writer.icns)
+    set(ICON_PATH ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/obsidian-media-writer.icns)
+    add_executable(obsidian-media-writer MACOSX_BUNDLE ${MEDIAWRITER_SRCS} ${ICON_PATH})
+    set_target_properties(obsidian-media-writer PROPERTIES
+      OUTPUT_NAME ObsidianMediaWriter
       MACOSX_BUNDLE TRUE
-      MACOSX_BUNDLE_BUNDLE_NAME FedoraMediaWriter
+      MACOSX_BUNDLE_BUNDLE_NAME ObsidianMediaWriter
       MACOSX_BUNDLE_BUNDLE_VERSION ${MEDIAWRITER_VERSION}
       MACOSX_BUNDLE_SHORT_VERSION_STRING ${MEDIAWRITER_VERSION}
       MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/data/Info.plist
@@ -74,7 +74,7 @@ if (APPLE)
     set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
-target_link_libraries(mediawriter
+target_link_libraries(obsidian-media-writer
     Qt6::Core
     Qt6::Network
     Qt6::Svg # Needed for macdeployqt to pick svg plugin
@@ -84,26 +84,26 @@ target_link_libraries(mediawriter
 )
 
 if (UNIX AND NOT APPLE)
-    target_link_libraries(mediawriter 
+    target_link_libraries(obsidian-media-writer 
     Qt6::DBus
 )
 endif()
 
 if (WIN32)
-    target_link_libraries(mediawriter dbghelp libwindisk)
+    target_link_libraries(obsidian-media-writer dbghelp libwindisk)
 endif()
 
 if (APPLE)
-    target_link_libraries(mediawriter "-framework Foundation" "-framework DiskArbitration")
+    target_link_libraries(obsidian-media-writer "-framework Foundation" "-framework DiskArbitration")
 endif()
 
 
-install(TARGETS mediawriter
+install(TARGETS obsidian-media-writer
     DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
 )
 
 if (UNIX AND NOT APPLE)
     install(DIRECTORY data/icons/hicolor/ DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor)
-    install(FILES data/org.fedoraproject.MediaWriter.desktop DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/applications)
-    install(FILES data/org.fedoraproject.MediaWriter.metainfo.xml DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/metainfo)
+    install(FILES data/org.obsidian.MediaWriter.desktop DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/applications)
+    install(FILES data/org.obsidian.MediaWriter.metainfo.xml DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/metainfo)
 endif()

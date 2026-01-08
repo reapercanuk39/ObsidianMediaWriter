@@ -1,5 +1,6 @@
 /*
- * Fedora Media Writer
+ * Obsidian Media Writer
+ * Based on Fedora Media Writer
  * Copyright (C) 2021-2022 Evžen Gasta <evzen.ml@seznam.cz>
  *
  * This program is free software; you can redistribute it and/or
@@ -46,7 +47,7 @@ ApplicationWindow {
             
             Heading {
                 Layout.alignment: Qt.AlignHCenter
-                text: qsTr("About Fedora Media Writer")
+                text: qsTr("About Obsidian Media Writer")
                 level: 3
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 width: mainColumn.width - units.gridUnit * 2
@@ -62,13 +63,13 @@ ApplicationWindow {
                 width: mainColumn.width - units.gridUnit * 2
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 visible: releases.beingUpdated
-                text: qsTr("Fedora Media Writer is now checking for new releases")
+                text: qsTr("Obsidian Media Writer is now checking for new releases")
             }
             
             Label {
                 width: mainColumn.width - units.gridUnit * 2
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                text: qsTr("Please report bugs or your suggestions on %1").arg("<a href=\"https://github.com/FedoraQt/MediaWriter/issues\">https://github.com/FedoraQt/MediaWriter/</a>")
+                text: qsTr("Please report bugs or your suggestions on %1").arg("<a href=\"https://github.com/reapercanuk39/ObsidianMediaWriter/issues\">https://github.com/reapercanuk39/ObsidianMediaWriter/</a>")
                 textFormat: Text.RichText
                 onLinkActivated: Qt.openUrlExternally(link)
                 opacity: 0.6

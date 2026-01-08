@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2025 Obsidian Project -->
+<!-- Based on Fedora Media Writer by Jan Grulich -->
+
+<component type="desktop-application">
+<id>org.obsidian.MediaWriter.desktop</id>
+<launchable type="desktop-id">org.obsidian.MediaWriter.desktop</launchable>
+<project_license>GPL-2.0+</project_license>
+<metadata_license>CC0-1.0</metadata_license>
+<name>Obsidian Media Writer</name>
+<summary>A tool to create a live USB drive with Obsidian OS</summary>
+<description>
+<p>A tool to create a bootable live USB drive with Obsidian OS - a security-hardened Linux distribution based on Debian 12. Obsidian Media Writer can download and write Obsidian OS to your flash drive with ease.</p>
+<p>Obsidian OS features comprehensive security hardening including kernel hardening, DROP-all firewall, MAC spoofing, memory wiping, and application sandboxing.</p>
+<p>Obsidian Media Writer can also write other bootable ISOs loaded from your local disk.</p>
+</description>
+<keywords>
+        <keyword>iso</keyword>
+        <keyword>obsidian</keyword>
+        <keyword>usb</keyword>
+        <keyword>writer</keyword>
+        <keyword>live</keyword>
+        <keyword>security</keyword>
+        <keyword>creator</keyword>
+        <keyword>media</keyword>
+    </keywords>
+<url type="homepage">https://github.com/reapercanuk39/ObsidianMediaWriter</url>
+<screenshots>
+<screenshot type="default"><image type="source">https://github.com/reapercanuk39/ObsidianMediaWriter/raw/main/dist/screenshots/linux_main.png</image></screenshot>
+</screenshots>
+<developer_name>Obsidian Project</developer_name>
+<content_rating type="oars-1.1"/>
+<releases>
+<release version="1.0.0" date="2025-01-08">
+<url>https://github.com/reapercanuk39/ObsidianMediaWriter/releases/tag/1.0.0</url>
+</release>
+</releases>
+</component>
