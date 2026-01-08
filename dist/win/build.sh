@@ -39,7 +39,7 @@ popd >/dev/null
 ROOTPATH=$(realpath "$SCRIPTDIR/../../")
 BUILDPATH="$ROOTPATH/build"
 
-MEDIAWRITER="$BUILDPATH/app/release/mediawriter.exe"
+MEDIAWRITER="$BUILDPATH/app/release/obsidian-media-writer.exe"
 HELPER="$BUILDPATH/app/release/helper.exe"
 
 if ! $opt_nosign; then
@@ -102,13 +102,13 @@ VERSION_FULL=''
 if $opt_local; then
     VERSION_FULL=$(git describe --tags)
     if $opt_debug; then
-        INSTALLER="$SCRIPTDIR/FedoraMediaWriter-win32-${VERSION_FULL}-debug.exe"
+        INSTALLER="$SCRIPTDIR/ObsidianMediaWriter-win32-${VERSION_FULL}-debug.exe"
     else
-        INSTALLER="$SCRIPTDIR/FedoraMediaWriter-win32-${VERSION_FULL}.exe"
+        INSTALLER="$SCRIPTDIR/ObsidianMediaWriter-win32-${VERSION_FULL}.exe"
     fi
 else
     VERSION_FULL=$(rpm -q mingw32-mediawriter --queryformat '%{VERSION}\n')
-    INSTALLER="$SCRIPTDIR/FedoraMediaWriter-win32-${VERSION_FULL}.exe"
+    INSTALLER="$SCRIPTDIR/ObsidianMediaWriter-win32-${VERSION_FULL}.exe"
 fi
 
 VERSION_STRIPPED=$(sed "s/-.*//" <<< "${VERSION_FULL}")
@@ -128,11 +128,11 @@ if $opt_local; then
     
     mkdir -p $BUILDPATH/app/release/
     cp -r $BUILDPATH/src/app/helper.exe $BUILDPATH/app/release/
-    cp -r $BUILDPATH/src/app/mediawriter.exe $BUILDPATH/app/release/
+    cp -r $BUILDPATH/src/app/obsidian-media-writer.exe $BUILDPATH/app/release/
 else
     mkdir -p "app/release"
     echo "=== Getting distribution binary"
-    cp "$BIN_PREFIX/bin/mediawriter.exe" app/release
+    cp "$BIN_PREFIX/bin/obsidian-media-writer.exe" app/release
     cp "$INSTALL_PREFIX/libexec/mediawriter/helper.exe" app/release
 fi
 
@@ -144,7 +144,7 @@ if [ ! -f "$MEDIAWRITER" ] || [ ! -f "$HELPER" ]; then
 fi
 
 echo "=== Copying icon "
-cp -r "$ROOTPATH/src/app/data/icons/mediawriter.ico" .
+cp -r "$ROOTPATH/src/app/data/icons/obsidian-mediawriter.ico" .
 
 echo "=== Removing object and MOC files"
 rm -f *.cpp
@@ -196,10 +196,10 @@ find . -type f -not -path '*/\.*' | sed 's/^\.\///g' | sed 's@\/@\\@g' | sort >>
 echo "=== Signing binaries"
 
 if ! $opt_nosign; then
-    osslsigncode sign -pkcs12 $CERTPATH/authenticode.pfx -readpass "$CERTPASS" -h sha256 -n "Fedora Media Writer" -i https://getfedora.org -t http://timestamp.comodoca.com/authenticode -in "$MEDIAWRITER" -out "$MEDIAWRITER.signed" >/dev/null
+    osslsigncode sign -pkcs12 $CERTPATH/authenticode.pfx -readpass "$CERTPASS" -h sha256 -n "Obsidian Media Writer" -i https://github.com/reapercanuk39/Obsidian -t http://timestamp.comodoca.com/authenticode -in "$MEDIAWRITER" -out "$MEDIAWRITER.signed" >/dev/null
     mv "$MEDIAWRITER.signed" "$MEDIAWRITER"
 
-    osslsigncode sign -pkcs12 $CERTPATH/authenticode.pfx -readpass "$CERTPASS" -h sha256 -n "Fedora Media Writer" -i https://getfedora.org -t http://timestamp.comodoca.com/authenticode -in "$HELPER" -out "$HELPER.signed" >/dev/null
+    osslsigncode sign -pkcs12 $CERTPATH/authenticode.pfx -readpass "$CERTPASS" -h sha256 -n "Obsidian Media Writer" -i https://github.com/reapercanuk39/Obsidian -t http://timestamp.comodoca.com/authenticode -in "$HELPER" -out "$HELPER.signed" >/dev/null
     mv "$HELPER.signed" "$HELPER"
 fi
 
@@ -218,10 +218,10 @@ sed -i "s/#!define VERSIONBUILD/!define VERSIONBUILD ${VERSION_BUILD}/" "$SCRIPT
 sed -i "s/#!define INSTALLSIZE/!define INSTALLSIZE ${INSTALLED_SIZE}/" "$SCRIPTDIR/mediawriter.tmp.nsi"
 makensis -DCERTPATH="$CERTPATH" -DCERTPASS="$CERTPASS" "$SCRIPTDIR/mediawriter.tmp.nsi" >/dev/null
 rm "$SCRIPTDIR/mediawriter.tmp.nsi"
-mv "$SCRIPTDIR/FMW-setup.exe" "$INSTALLER"
+mv "$SCRIPTDIR/ObsidianMediaWriter-setup.exe" "$INSTALLER"
 
 if ! $opt_nosign; then
-    osslsigncode sign -pkcs12 $CERTPATH//authenticode.pfx -readpass "$CERTPASS" -h sha256 -n "Fedora Media Writer" -i https://getfedora.org -t http://timestamp.comodoca.com/authenticode -in "$INSTALLER" -out "$INSTALLER.signed" >/dev/null
+    osslsigncode sign -pkcs12 $CERTPATH//authenticode.pfx -readpass "$CERTPASS" -h sha256 -n "Obsidian Media Writer" -i https://github.com/reapercanuk39/Obsidian -t http://timestamp.comodoca.com/authenticode -in "$INSTALLER" -out "$INSTALLER.signed" >/dev/null
     mv "$INSTALLER.signed" "$INSTALLER"
 fi
 

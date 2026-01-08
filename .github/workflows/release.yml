@@ -49,25 +49,23 @@ jobs:
       - name: Bundle
         run: |
           set -eo pipefail
-          "$QT_ROOT_DIR"/bin/macdeployqt build/src/app/FedoraMediaWriter.app -qmldir=src/app/qml -executable=build/src/app/FedoraMediaWriter.app/Contents/MacOS/helper
+          "$QT_ROOT_DIR"/bin/macdeployqt build/src/app/ObsidianMediaWriter.app -qmldir=src/app/qml -executable=build/src/app/ObsidianMediaWriter.app/Contents/MacOS/helper
           # No idea why but macdeployqt deploys debug libs too, just remove them, maybe fix this sometimes
-          for i in `find build/src/app/FedoraMediaWriter.app/ -name '*.dSYM'`; do rm -fr "$i"; done
+          for i in `find build/src/app/ObsidianMediaWriter.app/ -name '*.dSYM'`; do rm -fr "$i"; done
           cd build/src/app/
-          "$QT_ROOT_DIR"/bin/macdeployqt FedoraMediaWriter.app -dmg -always-overwrite
-          mv FedoraMediaWriter.dmg ../../../FedoraMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg
+          "$QT_ROOT_DIR"/bin/macdeployqt ObsidianMediaWriter.app -dmg -always-overwrite
+          mv ObsidianMediaWriter.dmg ../../../ObsidianMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg
 
       - name: Upload artifact (for direct download from workflow)
         uses: actions/upload-artifact@v4
         with:
-          # Use the dmg_arch_suffix for the artifact name
-          name: FedoraMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg
-          path: FedoraMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg
+          name: ObsidianMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg
+          path: ObsidianMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg
 
       - name: Upload to GitHub (release)
         run: |
           set -eo pipefail
-          # Pass the full filename including the architecture suffix
-          bash dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="${{ env.TAG_NAME }}" filename="FedoraMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg"
+          bash dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="${{ env.TAG_NAME }}" filename="ObsidianMediaWriter-macos${{ matrix.dmg_arch_suffix }}-${{ env.TAG_NAME }}.dmg"
 
   Windows-MSVC:
     runs-on: windows-latest
@@ -143,9 +141,9 @@ jobs:
           mkdir -p build/app/release
           cd build/app/release
           mv ../../src/app/helper.exe .
-          mv ../../src/app/mediawriter.exe .
+          mv ../../src/app/obsidian-media-writer.exe .
           cp $QT_ROOT_DIR/bin/liblzma.dll .
-          $QT_ROOT_DIR/bin/windeployqt.exe mediawriter.exe helper.exe liblzma.dll --verbose 2 --qmldir ../../.. --compiler-runtime --release
+          $QT_ROOT_DIR/bin/windeployqt.exe obsidian-media-writer.exe helper.exe liblzma.dll --verbose 2 --qmldir ../../.. --compiler-runtime --release
           find . -type d -not -path '*/\.*' | sed 's/^\.\///g' | sed 's@\/@\\@g' | grep -v "^.$" > uninstall.log
           find . -type f -not -path '*/\.*' | sed 's/^\.\///g' | sed 's@\/@\\@g' | sort >> uninstall.log
 
@@ -154,7 +152,7 @@ jobs:
         run: |
           VERSION_STRIPPED=$(sed "s/-.*//" <<< "${{ env.TAG_NAME }}")
           if [[ "$VERSION_STRIPPED" == "" ]]; then
-              VERSION_STRIPPED=5.2.50
+              VERSION_STRIPPED=1.0.0
           fi
           VERSION_MAJOR=$(cut -d. -f1 <<< "${VERSION_STRIPPED}")
           VERSION_MINOR=$(cut -d. -f2 <<< "${VERSION_STRIPPED}")
@@ -175,15 +173,8 @@ jobs:
           echo "LICENSE.LGPL-2.txt" >> build/app/release/uninstall.log
 
           "/c/Program Files (x86)/NSIS/makensis.exe" -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.tmp.nsi
-          mv dist/win/FMW-setup.exe ./"FedoraMediaWriter-win64-${{ env.TAG_NAME }}.exe"
+          mv dist/win/ObsidianMediaWriter-setup.exe ./"ObsidianMediaWriter-win64-${{ env.TAG_NAME }}.exe"
 
       - name: Upload to GitHub (release)
         run: |
-          bash dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="${{ env.TAG_NAME }}" filename="FedoraMediaWriter-win64-${{ env.TAG_NAME }}.exe"
-
-      - name: Publish to WinGet
-        uses: vedantmgoyal9/winget-releaser@main
-        with:
-          identifier: Fedora.FedoraMediaWriter
-          version: ${{ env.TAG_NAME }}
-          token: ${{ secrets.WINGET_TOKEN }}
+          bash dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="${{ env.TAG_NAME }}" filename="ObsidianMediaWriter-win64-${{ env.TAG_NAME }}.exe"

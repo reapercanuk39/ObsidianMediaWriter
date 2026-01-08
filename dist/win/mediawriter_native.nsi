@@ -11,11 +11,11 @@ XPStyle on
 #!define VERSIONMINOR
 #!define VERSIONBUILD
 
-!define APPNAME           "Fedora Media Writer"
+!define APPNAME           "Obsidian Media Writer"
 !define /date CURRENTYEAR "%Y"
-!define COMPANYNAME       "Fedora Project"
+!define COMPANYNAME       "Obsidian OS Project"
 !define COPYRIGHT         "${COMPANYNAME} ${CURRENTYEAR}"
-!define DESCRIPTION       "Tool to write Fedora images to flash drives"
+!define DESCRIPTION       "Tool to write Obsidian OS images to flash drives"
 !define SHORTVERSION      "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
 !define FULLVERSION       "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}.0"
 
@@ -25,9 +25,9 @@ Caption "${APPNAME} ${SHORTVERSION}"
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 
-!define HELPURL   "https://github.com/FedoraQt/MediaWriter" # "Support Information" link
-!define UPDATEURL "https://getfedora.org"                   # "Product Updates" link
-!define ABOUTURL  "https://getfedora.org"                   # "Publisher" link
+!define HELPURL   "https://github.com/reapercanuk39/ObsidianMediaWriter" # "Support Information" link
+!define UPDATEURL "https://github.com/reapercanuk39/Obsidian"          # "Product Updates" link
+!define ABOUTURL  "https://github.com/reapercanuk39/Obsidian"          # "Publisher" link
 
 # This is the size (in kB) of all the files copied into "Program Files"
 #!define INSTALLSIZE
@@ -64,12 +64,12 @@ Var UninstLog
     !system "chmod +x tempinstaller.exe" = 0
     !system "tempinstaller.exe" = 2
     !if "${CERTPASS}" != ""
-        !system 'osslsigncode sign -pkcs12 "${CERTPATH}/authenticode.pfx" -readpass "${CERTPASS}" -h sha256 -n "Fedora Media Writer" -i https://getfedora.org -t http://timestamp.comodoca.com/authenticode -in "/c/uninstall.unsigned.exe" -out "/c/uninstall.exe" ' = 0
+        !system 'osslsigncode sign -pkcs12 "${CERTPATH}/authenticode.pfx" -readpass "${CERTPASS}" -h sha256 -n "Obsidian Media Writer" -i https://github.com/reapercanuk39/Obsidian -t http://timestamp.comodoca.com/authenticode -in "/c/uninstall.unsigned.exe" -out "/c/uninstall.exe" ' = 0
     !else
         !system 'mv "/c/uninstall.unsigned.exe" "/c/uninstall.exe"' = 0
     !endif
 
-    outFile "FMW-setup.exe"
+    outFile "ObsidianMediaWriter-setup.exe"
     SetCompressor /SOLID lzma
 !endif
 
@@ -82,17 +82,17 @@ InstallDir "$PROGRAMFILES64\${APPNAME}"
 LicenseData "../../build/app/release/LICENSE.GPL-2.txt"
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME}"
-Icon "../../src/app/data/icons/mediawriter.ico"
+Icon "../../src/app/data/icons/obsidian-mediawriter.ico"
 
 !include LogicLib.nsh
 
-!define MUI_ICON ../../src/app/data/icons/mediawriter.ico
+!define MUI_ICON ../../src/app/data/icons/obsidian-mediawriter.ico
 
 !insertmacro MUI_PAGE_LICENSE "../../build/app/release/LICENSE.GPL-2.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_NOAUTOCLOSE
-!define MUI_FINISHPAGE_RUN $INSTDIR\mediawriter.exe
+!define MUI_FINISHPAGE_RUN $INSTDIR\obsidian-media-writer.exe
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -307,21 +307,21 @@ section "install"
 
             # Files added here should be removed by the uninstaller (see section "uninstall")
             File /r "..\..\build\app\release\*.*"
-            File "..\..\src\app\data\icons\mediawriter.ico"
+            File "..\..\src\app\data\icons\obsidian-mediawriter.ico"
 
             ; this packages the signed uninstaller
             File c:\uninstall.exe
         !endif
 
         # Start Menu
-        createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\mediawriter.exe" "" "$INSTDIR\mediawriter.ico"
+        createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\obsidian-media-writer.exe" "" "$INSTDIR\obsidian-mediawriter.ico"
 
         # Registry information for add/remove programs
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName"          "${APPNAME}"
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString"      "$\"$INSTDIR\uninstall.exe$\""
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /S"
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "InstallLocation"      "$\"$INSTDIR$\""
-        WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon"          "$\"$INSTDIR\mediawriter.ico$\""
+        WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon"          "$\"$INSTDIR\obsidian-mediawriter.ico$\""
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "Publisher"            "${COMPANYNAME}"
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "HelpLink"             "${HELPURL}"
         WriteRegStr HKLM   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLUpdateInfo"        "${UPDATEURL}"
@@ -387,7 +387,7 @@ sectionEnd
             Goto LoopRead
         LoopDone:
         FileClose $UninstLog
-        Delete "$INSTDIR\mediawriter.ico"
+        Delete "$INSTDIR\obsidian-mediawriter.ico"
         Delete "$INSTDIR\${UninstLog}"
         Delete "$INSTDIR\uninstall.exe"
         Pop $R2
